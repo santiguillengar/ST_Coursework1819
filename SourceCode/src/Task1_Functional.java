@@ -7,6 +7,8 @@ import st.Parser;
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Assert;
+
 public class Task1_Functional {
 
 private Parser parser;
@@ -40,27 +42,54 @@ private Parser parser;
 		assertEquals(parser.getString("x"), "1");
 	}
 	
-	@Test
-	public void test_32() {
-		//TODO: Joao
-		assertEquals(1, 1);
+	
+	
+	@Test(expected = RuntimeException.class)
+	public void test_32_name_numeric_start() {
+		parser.add("1test", "t", Parser.STRING);
 	}
+	@Test(expected = RuntimeException.class)
+	public void test_32_name_contains_asterisk() {
+		parser.add("test*", "t", Parser.STRING);
+	}
+	public void test_32_name_contains_numbers() {
+		parser.add("test1", "t", Parser.STRING);
+	}
+	public void test_32_name_contains_underscore() {
+		parser.add("test_", "t", Parser.STRING);
+	}
+	@Test(expected = RuntimeException.class)
+	public void test_32_shortcut_numeric_start() {
+		parser.add("test", "1t", Parser.STRING);
+	}
+	@Test(expected = RuntimeException.class)
+	public void test_32_shortcut_contains_asterisk() {
+		parser.add("test", "t*", Parser.STRING);
+	}
+	public void test_32_shortcut_contains_numbers() {
+		parser.add("test", "t1", Parser.STRING);
+	}
+	public void test_32_shortcut_contains_underscore() {
+		parser.add("test", "t_", Parser.STRING);
+	}
+	
+	
 	
 	@Test
 	public void test_33() {
-		//TODO: Joao
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_34() {
-		//TODO: Joao
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_35() {
-		//TODO: Joao
+
 		assertEquals(1, 1);
 	}
 	
@@ -69,7 +98,7 @@ private Parser parser;
 	
 	@Test
 	public void test_41() {
-		//TODO: Santi
+
 		assertEquals(1, 1);
 	}
 	
@@ -77,49 +106,49 @@ private Parser parser;
 	
 	@Test
 	public void test_51() {
-		//TODO: Joao
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_52() {
-		//TODO: Santi
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_53() {
-		//TODO: Joao
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_54() {
-		//TODO: Santi
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_55() {
-		//TODO: Joao
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_56() {
-		//TODO: Santi
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_57() {
-		//TODO: Joao
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_58() {
-		//TODO: Santi
+
 		assertEquals(1, 1);
 	}
 	
@@ -127,13 +156,13 @@ private Parser parser;
 	
 	@Test
 	public void test_61() {
-		//TODO: Joao
+
 		assertEquals(1, 1);
 	}
 	
 	@Test
 	public void test_62() {
-		//TODO: Santi
+
 		assertEquals(1, 1);
 	}
 }
