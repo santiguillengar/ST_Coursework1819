@@ -78,7 +78,20 @@ private Parser parser;
 	@Test
 	public void test_33() {
 
-		assertEquals(1, 1);
+		parser.add("output", "o", Parser.STRING);
+		
+		parser.parse("--Output=output.txt");
+		assertEquals(parser.getString("Output"), "");
+		
+		parser.parse("--output=output.txt");
+		assertEquals(parser.getString("output"), "output.txt");
+		
+		parser.parse("--Output=output.txt");
+		assertEquals(parser.getString("o"), "");
+		
+		parser.parse("--output=output.txt");
+		assertEquals(parser.getString("o"), "output.txt");
+
 	}
 	
 	@Test
