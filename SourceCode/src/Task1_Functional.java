@@ -160,8 +160,6 @@ private Parser parser;
 		assertEquals(parser.getInteger("output"), 1);
 	}
 	
-	
-	
 	@Test(expected = RuntimeException.class)
 	public void test_42_name_numeric_start() {
 		parser.add("1test", Parser.STRING);
@@ -177,7 +175,6 @@ private Parser parser;
 		parser.add("test_", Parser.STRING);
 	}
 
-	
 	@Test
 	public void test_43() {
 
@@ -191,7 +188,6 @@ private Parser parser;
 
 	}
 
-	
 	@Test
 	public void test_45() {
 
@@ -233,20 +229,32 @@ private Parser parser;
 	
 	@Test
 	public void test_51() {
-
-		assertEquals(1, 1);
+		parser.add("output", "o", Parser.STRING);
+		assertEquals(parser.parse("--output=output.txt"), 0);
+		
+		parser.parse("--output=output.txt");
+		assertEquals(parser.getString("output"), "output.txt");
 	}
 	
 	@Test
 	public void test_52() {
-
-		assertEquals(1, 1);
+		parser.add("output", "o", Parser.STRING);
+		assertEquals(parser.parse("-o=output.txt"), 0);
+		
+		parser.parse("-o=output.txt");
+		assertEquals(parser.getString("output"), "output.txt");
 	}
 	
 	@Test
 	public void test_53() {
 
-		assertEquals(1, 1);
+		parser.add("output", "o", Parser.STRING);
+		
+		parser.parse("--output=output.txt");
+		assertEquals(parser.getString("output"), "output.txt");
+		
+		parser.parse("--output output2.txt");
+		assertEquals(parser.getString("output"), "output2.txt");
 	}
 	
 	@Test
