@@ -351,10 +351,5 @@ private Parser parser;
 		
 
 	}
-	
-	@Test
-	public void test_62() {
 
-		assertEquals(1, 1);
-	}
 }
