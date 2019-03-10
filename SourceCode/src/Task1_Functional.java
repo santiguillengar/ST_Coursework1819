@@ -260,25 +260,62 @@ private Parser parser;
 	@Test
 	public void test_54() {
 
-		assertEquals(1, 1);
+		parser.add("output", "o", Parser.STRING);
+		
+		parser.parse("--output=\"output.txt\"");
+		assertEquals(parser.getString("output"), "output.txt");
+		
+		parser.parse("--output='output2.txt'");
+		assertEquals(parser.getString("output"), "output2.txt");
+		
+		parser.parse("--output=output3.txt");
+		assertEquals(parser.getString("output"), "output3.txt");
 	}
 	
 	@Test
 	public void test_55() {
 
-		assertEquals(1, 1);
+		parser.add("output", "o", Parser.STRING);
+		
+		parser.parse("--output=\"value='abc'\"");
+		assertEquals(parser.getString("output"), "value='abc'");
+		
+		parser.parse("--output='value=\"abc\"'");
+		assertEquals(parser.getString("output"), "value=\"abc\"");
 	}
 	
 	@Test
 	public void test_56() {
 
-		assertEquals(1, 1);
+		parser.add("output", "o", Parser.STRING);
+		
+		parser.parse("--output=output.txt");
+		parser.parse("--output=output2.txt");
+		assertEquals(parser.getString("output"), "output2.txt");
+		
+		parser.parse("-o=output3.txt");
+		assertEquals(parser.getString("output"), "output3.txt");
 	}
 	
 	@Test
 	public void test_57() {
 
-		assertEquals(1, 1);
+		parser.add("outputStr", "oStr", Parser.STRING);		
+		parser.parse("--outputStr");
+		assertEquals(parser.getString("outputStr"), "");
+		
+		parser.add("outputInt", "oInt", Parser.INTEGER);
+		parser.parse("--outputInt");
+		assertEquals(parser.getInteger("outputInt"), 0);
+		
+		parser.add("outputBool", "oBool", Parser.BOOLEAN);
+		parser.parse("--outputBool");
+		assertEquals(parser.getBoolean("outputBool"), false);
+		
+		parser.add("outputChar", "oChar", Parser.CHAR);
+		parser.parse("--outputChar");
+		assertEquals(parser.getChar("outputChar"), '\0');
+	
 	}
 	
 	@Test
