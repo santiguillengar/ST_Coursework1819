@@ -309,8 +309,10 @@ private Parser parser;
 		assertEquals(parser.getInteger("outputInt"), 0);
 		
 		parser.add("outputBool", "oBool", Parser.BOOLEAN);
-		parser.parse("--outputBool");
+		parser.parse("");
 		assertEquals(parser.getBoolean("outputBool"), false);
+		parser.parse("--outputBool");
+		assertEquals(parser.getBoolean("outputBool"), true);
 		
 		parser.add("outputChar", "oChar", Parser.CHAR);
 		parser.parse("--outputChar");
@@ -321,15 +323,33 @@ private Parser parser;
 	@Test
 	public void test_58() {
 
-		assertEquals(1, 1);
+		parser.add("output", "O", Parser.STRING);
+		parser.add("input", "i",  Parser.STRING);
+		
+		parser.parse("--input 1.txt --output=2.txt");
+		assertEquals(parser.getString("input"), "1.txt");
+		assertEquals(parser.getString("output"), "2.txt");
+		
+		parser.parse("-O");
+		assertEquals(parser.getString("-O"), "");
 	}
 	
 	// Section 6
 	
 	@Test
 	public void test_61() {
+		
+		parser.add("output", "o", Parser.STRING);
 
-		assertEquals(1, 1);
+		parser.parse("-o=output.txt");
+		assertEquals(parser.getString("o"), "output.txt");
+		
+		parser.add("o", "test", Parser.STRING);
+
+		parser.parse("--o=output2.txt");
+		assertEquals(parser.getString("o"), "output2.txt");
+		
+
 	}
 	
 	@Test
