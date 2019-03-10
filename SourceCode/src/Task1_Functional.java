@@ -39,10 +39,8 @@ private Parser parser;
 		
 		parser.add("output", "x", Parser.INTEGER);
 		parser.parse("--output=1");
-		assertEquals(parser.getString("x"), "1");
+		assertEquals(parser.getInteger("x"), 1);
 	}
-	
-	
 	
 	@Test(expected = RuntimeException.class)
 	public void test_32_name_numeric_start() {
@@ -73,8 +71,6 @@ private Parser parser;
 		parser.add("test", "t_", Parser.STRING);
 	}
 	
-	
-	
 	@Test
 	public void test_33() {
 
@@ -86,24 +82,68 @@ private Parser parser;
 		parser.parse("--output=output.txt");
 		assertEquals(parser.getString("output"), "output.txt");
 		
-		parser.parse("--Output=output.txt");
-		assertEquals(parser.getString("o"), "");
-		
-		parser.parse("--output=output.txt");
+		parser.parse("-o=output.txt");
 		assertEquals(parser.getString("o"), "output.txt");
+		
+		parser.parse("-O=output.txt");
+		assertEquals(parser.getString("O"), "");
 
 	}
 	
 	@Test
 	public void test_34() {
 
-		assertEquals(1, 1);
+		parser.add("o", "test", Parser.STRING);
+		parser.add("output", "o", Parser.INTEGER);
+		
+		parser.parse("--output=2");
+		assertEquals(parser.getInteger("output"), 2);
+		
+		parser.parse("-o=1");
+		assertEquals(parser.getInteger("output"), 1);
+		
+		parser.parse("--o=output3.txt");
+		assertEquals(parser.getString("o"), "output3.txt");
+		
+		parser.parse("-test=output4.txt");
+		assertEquals(parser.getString("o"), "output4.txt");
+
 	}
 	
 	@Test
 	public void test_35() {
 
-		assertEquals(1, 1);
+		parser.add("output", "o", Parser.BOOLEAN);
+		
+		parser.parse("--output=0");
+		assertEquals(parser.getBoolean("output"), false);
+		
+		parser.parse("--output=false");
+		assertEquals(parser.getBoolean("output"), false);
+		
+		parser.parse("--output=False");
+		assertEquals(parser.getBoolean("output"), false);
+		
+		parser.parse("--output=FALSE");
+		assertEquals(parser.getBoolean("output"), false);
+		
+		parser.parse("");
+		assertEquals(parser.getBoolean("output"), false);
+		
+		parser.parse("--output=1");
+		assertEquals(parser.getBoolean("output"), true);
+		
+		parser.parse("--output=true");
+		assertEquals(parser.getBoolean("output"), true);
+		
+		parser.parse("--output=True");
+		assertEquals(parser.getBoolean("output"), true);
+		
+		parser.parse("--output=TRUE");
+		assertEquals(parser.getBoolean("output"), true);
+		
+		parser.parse("--output");
+		assertEquals(parser.getBoolean("output"), true);
 	}
 	
 	
@@ -111,8 +151,88 @@ private Parser parser;
 	
 	@Test
 	public void test_41() {
+		parser.add("output", Parser.STRING);
+		parser.parse("--output=output.txt");
+		assertEquals(parser.getString("output"), "output.txt");
+		
+		parser.add("output", Parser.INTEGER);
+		parser.parse("--output=1");
+		assertEquals(parser.getInteger("output"), 1);
+	}
+	
+	
+	
+	@Test(expected = RuntimeException.class)
+	public void test_42_name_numeric_start() {
+		parser.add("1test", "t", Parser.STRING);
+	}
+	@Test(expected = RuntimeException.class)
+	public void test_42_name_contains_asterisk() {
+		parser.add("test*", "t", Parser.STRING);
+	}
+	public void test_42_name_contains_numbers() {
+		parser.add("test1", "t", Parser.STRING);
+	}
+	public void test_42_name_contains_underscore() {
+		parser.add("test_", "t", Parser.STRING);
+	}
+	@Test(expected = RuntimeException.class)
+	public void test_42_shortcut_numeric_start() {
+		parser.add("test", "1t", Parser.STRING);
+	}
+	@Test(expected = RuntimeException.class)
+	public void test_42_shortcut_contains_asterisk() {
+		parser.add("test", "t*", Parser.STRING);
+	}
+	public void test_42_shortcut_contains_numbers() {
+		parser.add("test", "t1", Parser.STRING);
+	}
+	public void test_42_shortcut_contains_underscore() {
+		parser.add("test", "t_", Parser.STRING);
+	}
+	
+	@Test
+	public void test_43() {
 
-		assertEquals(1, 1);
+		parser.add("output", "o", Parser.STRING);
+		
+		parser.parse("--Output=output.txt");
+		assertEquals(parser.getString("Output"), "");
+		
+		parser.parse("--output=output.txt");
+		assertEquals(parser.getString("output"), "output.txt");
+		
+		parser.parse("-o=output.txt");
+		assertEquals(parser.getString("o"), "output.txt");
+		
+		parser.parse("-O=output.txt");
+		assertEquals(parser.getString("O"), "");
+
+	}
+	
+	@Test
+	public void test_44() {
+
+		parser.add("o", "test", Parser.STRING);
+		parser.add("output", "o", Parser.INTEGER);
+		
+		parser.parse("--output=2");
+		assertEquals(parser.getInteger("output"), 2);
+		
+		parser.parse("-o=1");
+		assertEquals(parser.getInteger("output"), 1);
+		
+		parser.parse("--o=output3.txt");
+		assertEquals(parser.getString("o"), "output3.txt");
+		
+		parser.parse("-test=output4.txt");
+		assertEquals(parser.getString("o"), "output4.txt");
+
+	}
+	
+	@Test
+	public void test_45() {
+		assertEquals(1,1);
 	}
 	
 	// Section 5
