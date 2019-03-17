@@ -7,6 +7,6 @@ import st.Parser;
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
 
-public class Task3_TDD_N {
+public class Task3_TDD_2 {
 
 }

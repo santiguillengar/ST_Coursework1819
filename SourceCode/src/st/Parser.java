@@ -1,6 +1,7 @@
 package st;
 
 import java.math.BigInteger;
+import java.util.List;
 
 public class Parser {
 	public static final int INTEGER = 1;
@@ -203,6 +204,11 @@ public class Parser {
 	@Override
 	public String toString() {
 		return optionMap.toString();
+	}
+	
+	// Part 3
+	public List<Integer> getIntegerList(String option){
+		return null;
 	}
 
 }
