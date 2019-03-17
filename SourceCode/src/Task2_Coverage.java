@@ -6,7 +6,6 @@ import st.Parser;
 
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
-import java.math.BigInteger;
 
 
 public class Task2_Coverage {
@@ -64,5 +63,52 @@ public class Task2_Coverage {
 	public void test_empty_parse() {		
 		assertEquals(parser.parse(null), -1);
 	}
+	
+	@Test
+	public void test_toString() {
+		parser.add("output", "o", Parser.CHAR);
+		
+		assertEquals(parser.toString(),"OptionMap [options=\n" + 
+				"	{name=output, shortcut=o, type=4, value=}\n" + 
+				"]");
+	}
+	
+	@Test
+	public void test_parse_strings() {
+		parser.add("output", "o", Parser.STRING);
+		
+		parser.parse("    ");
+		assertEquals(parser.parse("output=output.txt"), -3);
+		
+		parser.parse("-_ ");
+		parser.parse("-_-");
+		parser.parse("-_ -");
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void test_isOptionValid_type_over() {
+		parser.add("output", "o", 5);
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void test_isOptionValid_type_under() {
+		parser.add("output", "o", 0);
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void test_isOptionValid_name_null() {
+		parser.add(null, "o", Parser.STRING);
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void test_isOptionValid_name_empty() {
+		parser.add("", "o", Parser.STRING);
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void test_isOptionValid_shortcut_null() {
+		parser.add("output", null, Parser.STRING);
+	}
+	
 	
 }
