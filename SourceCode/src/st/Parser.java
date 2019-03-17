@@ -257,7 +257,8 @@ public class Parser {
 				        power *= 10;
 				        result_is_valid = true;
 			        } 
-			    	else if (c == '-') {
+			    	// else it is a '-'
+			    	else {
 			        	// Case there was a number before
 			    		if (result_is_valid) {
 			    			// Case there is something other than 2 numbers.
@@ -269,6 +270,7 @@ public class Parser {
 			        		is_range = true;
 			        	}
 			    		else {
+			    			if(is_negative_number) return new ArrayList<Integer>();
 			    			is_negative_number=true;
 			    		}
 			        	if (i == slide.length() - 1) return new ArrayList<Integer>();

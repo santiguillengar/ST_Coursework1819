@@ -7,7 +7,6 @@ import st.Parser;
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Assert;
 
 public class Task1_Functional {
 
