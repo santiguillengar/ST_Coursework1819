@@ -27,6 +27,9 @@ public class Task2_Coverage {
 		
 		parser.parse("--output=a");
 		assertEquals(parser.getInteger("output"), 0);
+		
+		assertEquals(parser.getInteger(""), 0);
+
 	}
 	
 	@Test

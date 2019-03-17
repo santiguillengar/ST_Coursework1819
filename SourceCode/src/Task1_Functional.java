@@ -42,6 +42,24 @@ private Parser parser;
 		assertEquals(parser.getInteger("x"), 1);
 	}
 	
+	//Tests all types of values
+	@Test
+	public void test_31_types() {
+		parser.add("string", "s", Parser.STRING);
+		parser.add("integer", "i", Parser.INTEGER);
+		parser.add("boolean", "b", Parser.BOOLEAN);
+		parser.add("char", "c", Parser.CHAR);
+
+		parser.parse("-s=output.txt -i=123 -b=false -c=o");
+		
+		assertEquals(parser.getString("s"), "output.txt");
+		assertEquals(parser.getInteger("i"), 123);
+		assertEquals(parser.getBoolean("b"), false);
+		assertEquals(parser.getChar("c"), 'o');
+
+		
+	}
+	
 	@Test(expected = RuntimeException.class)
 	public void test_32_name_numeric_start() {
 		parser.add("1test", "t", Parser.STRING);
