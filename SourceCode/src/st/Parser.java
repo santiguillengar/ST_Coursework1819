@@ -1,7 +1,10 @@
 package st;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.lang.Math;
 
 public class Parser {
 	public static final int INTEGER = 1;
@@ -208,7 +211,92 @@ public class Parser {
 	
 	// Part 3
 	public List<Integer> getIntegerList(String option){
-		return null;
+		// List to be returned
+		List<Integer> integer_list = new ArrayList<Integer>();
+		// Get value
+		String value = getString(option);
+		
+		// Check value is not empty
+		if (!value.equals("")) {
+			
+			//Split the string into numbers and ranges.
+		    List<String> numbers = new ArrayList<String>();
+		    String number = "";
+		    char c;
+		    for (int i = 0; i < value.length(); i++) {
+		    	c = value.charAt(i);
+
+		    	if (Character.isDigit(c) || c == '-') {
+		    		number = number + c;
+		    	}
+		    	else {
+		    		numbers.add(number);
+		    		number = "";
+		    	}
+
+		    }
+		    if (!number.equals("")) {
+		    	numbers.add(number);
+		    }
+		    
+		    
+		    //For each number/range add to the list
+		    for (String slide: numbers) {
+				int power = 1;
+			    int result = 0;
+			    boolean result_is_valid = false;
+			    boolean is_negative_number = false;
+			    boolean is_range = false;
+			    Integer first_number = null;
+			    
+			    // For each character in the number/range
+			    for (int i = 0; i < slide.length(); i++) {
+			    	c = slide.charAt(i);
+			    	if (Character.isDigit(c)) {
+				        result = result * power + (c - '0');
+				        power *= 10;
+				        result_is_valid = true;
+			        } 
+			    	else if (c == '-') {
+			        	// Case there was a number before
+			    		if (result_is_valid) {
+			    			// Case there is something other than 2 numbers.
+			    			if(first_number != null) return new ArrayList<Integer>();
+			        		first_number=result;
+			        		if (is_negative_number) first_number = -first_number;
+			        		is_negative_number = false;
+			        		result_is_valid = false;
+			        		is_range = true;
+			        	}
+			    		else {
+			    			is_negative_number=true;
+			    		}
+			        	if (i == slide.length() - 1) return new ArrayList<Integer>();
+			        	result = 0;
+			        	power = 1;
+			        	
+		        	}
+			    }
+			    
+			    // add if it is range
+			    if (is_range) {
+			    	if (is_negative_number) result = -result;
+			    	for (int i = Math.min(result, first_number); i <= Math.max(result, first_number); i++) {
+				    	integer_list.add(new Integer(i));
+			    	}
+			    }
+			    else {
+				    // add if it is number
+				    if (result_is_valid) {
+				    	if (is_negative_number) result = -result;
+				    	integer_list.add(new Integer(result));
+				    }
+			    }
+
+		    }
+        	if (integer_list.size()>1) Collections.sort(integer_list);
+		}
+		return integer_list ;
 	}
 
 }
